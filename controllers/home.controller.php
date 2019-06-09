@@ -2,27 +2,23 @@
 
 class HomeController extends Controller
 {
-
-	public function __construct($data = array()){
-        parent::__construct($data);
-        $this->model = new Home();
-    }
-
-	public function index()
-	{
-		$this->data['test_content'] = 'Here will be a pages list';
+	
+    public function index(){
+		$data = array();
+        $view = $this->withLayout(
+			new View($data, VIEWS_PATH.DS.'home'.DS.'index.html')
+		);
+		$content = $view->render();
+		echo $content;
 	}
-
-	public function view()
-	{
-		$params = App::getRouter()->getParams();
-
-		if (isset($params[0])) {
-			$alias = strtolower($params[0]);
-			$this->data['content'] = "Here will be a page with '{$alias}' alias";
-		}
-
-		$this->data['content'] = "there is no parameters";
+	
+	public function about(){
+		$data = array();
+        $view = $this->withLayout(
+			new View($data, VIEWS_PATH.DS.'home'.DS.'about.html')
+		);
+		$content = $view->render();
+		echo $content;
 	}
 
 	public function upload()
@@ -48,8 +44,8 @@ class HomeController extends Controller
 					'answer_4' => $answer_4,
 					'correct_answer' => $correct_answer
 				);
-				if ($c <> 0) {					/*SKIP THE FIRST ROW*/
-					$this->model->submit_index($data);
+				if ($c <> 0) {
+					echo $data;
 				}
 				$c = $c + 1;
 			}

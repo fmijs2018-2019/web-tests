@@ -1,0 +1,22 @@
+
+
+<h2 style="text-align: center">Profile</h2>
+
+<b>Id:</b> <?=$data['user']['sub']?>
+<br><br>
+<b>Nickname:</b> <?=$data['user']['nickname']?>
+<br><br>
+<b>Email:</b> <?=$data['user']['email']?>
+<br><br>
+<b>Email verification:</b> <?=$data['user']['email_verified'] ? 'Yes' : 'No'?>
+<br><br>
+<b>Picture:</b> <a href="<?=$data['user']['picture']?>"><?=$data['user']['picture']?></a>
+<br><br>
+<b>Last profile update:</b> <?=$data['user']['updated_at']?>
+<br><br>
+<b>Access token:</b> <?=$data['accessToken']?>
+<br><br>
+<b>Id token:</b> <?=$data['idToken']?>
+<br><br>
+
+
