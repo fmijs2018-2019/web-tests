@@ -12,6 +12,7 @@ class AuthController extends Controller
 
 	public function login()
 	{
+		var_dump($_SESSION, $_COOKIE);
 		$auth = new Auth();
 		$auth->login();
 		echo 'login...';
@@ -25,7 +26,7 @@ class AuthController extends Controller
 
 	public function callback()
 	{
-		$user = $this->auth->handleLogin();
+		$this->auth->handleLogin();
 		$url = Config::get('site_url');
 		header("Location: $url/auth/profile");
 		die();
