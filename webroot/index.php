@@ -45,6 +45,10 @@ $router->mount('/home', function() use ($router) {
         $contoller->index();
 	});
 	
+    $router->get('/upload', function() use ($contoller) {
+        $contoller->upload();
+	});
+	
 	$router->get('/', function() use ($contoller){
 		$contoller->index();
 	});
