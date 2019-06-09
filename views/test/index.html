@@ -1,0 +1,70 @@
+<input type="file" name="file" id="file" size="150">
+<button name="upload" onclick="upload()">Upload</button>
+
+<ol id="questions-list"></ol>
+
+<script>
+	let file;
+	document.getElementById('file').addEventListener('change', function (e) {
+		file = e.target.files[0];
+	});
+
+	function upload() {
+		let formData = new FormData();
+		formData.set("file", file, file.name);
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', 'http://localhost/test/upload', true);
+
+		xhr.onload = function () {
+			if (this.status == 200) {
+				const questions = JSON.parse(this.response);
+				if (questions) {
+					const questionsList = document.getElementById('questions-list');
+					questions.forEach((q, qi) => {
+						const domElement = document.createElement('li');
+						const answers = [q.answer_1, q.answer_2, q.answer_3, q.answer_4].map((a, i) => {
+							return `<input type="radio" name="answer${qi}" ${i + 1 === +q.correct_answer ? 'checked="checked"' : ''} value="${i + 1}"> ${i + 1}`
+						}).join('');
+						const innerHtml = `
+							<div>${q['question']}</div>
+							<div>	•	${q['answer_1']}</div>
+							<div>	•	${q['answer_2']}</div>
+							<div>	•	${q['answer_3']}</div>
+							<div>	•	${q['answer_4']}</div> <br>
+							<div>Correct answer: </div>
+							${answers}
+							<br>`;
+
+						domElement.innerHTML = innerHtml;
+						questionsList.appendChild(domElement);
+					});
+
+					const saveButton = document.createElement('button');
+					saveButton.innerText = 'Save';
+					saveButton.onclick = () => {
+						questions.forEach((q, qi) => {
+							const radios = document.getElementsByName(`answer${qi}`);
+
+							const length = radios.length;
+							for (let i = 0; i < length; i++) {
+								if (radios[i].checked) {
+									questions[qi]['correct_answer'] = radios[i].value;
+									break;
+								}
+							}
+						});
+						console.log(questions);
+						const xhr = new XMLHttpRequest();
+						xhr.open('POST', 'http://localhost/test/save', true);
+						xhr.send(JSON.stringify(questions));
+					}
+					questionsList.parentElement.appendChild(saveButton);
+				}
+
+			};
+		};
+
+		xhr.send(formData);
+		return false;
+	}
+</script>

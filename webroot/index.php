@@ -45,10 +45,23 @@ $router->mount('/home', function() use ($router) {
         $contoller->index();
 	});
 	
-    $router->get('/upload', function() use ($contoller) {
+	$router->get('/', function() use ($contoller){
+		$contoller->index();
+	});
+});
+
+// test routes
+$router->mount('/test', function() use ($router) {
+	$contoller = new TestController();
+
+    $router->post('/upload', function() use ($contoller) {
         $contoller->upload();
 	});
 	
+    $router->post('/save', function() use ($contoller) {
+        $contoller->save();
+	});
+
 	$router->get('/', function() use ($contoller){
 		$contoller->index();
 	});
