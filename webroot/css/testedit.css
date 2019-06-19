@@ -1,0 +1,43 @@
+.test-edit-container {
+	width: 60%;
+	margin: auto;
+	border: solid 1px lightgray;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.answer-container {
+	display: block;
+    width: 90%;
+    padding: 5px;
+}
+
+.answer-text {
+	width: 85%;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1px lightgray;
+}
+
+.topic {
+	text-align: center;
+	display: block;
+    width: 150px;
+    margin: 10px auto;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 1px lightgray;
+}
+
+.save-button {
+	display: block;
+	background-color: #09a335;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	width: 80px;
+	padding: 12px;
+	margin: 20px auto;
+	font-size: 1.2em;
+}

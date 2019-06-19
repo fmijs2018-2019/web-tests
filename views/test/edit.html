@@ -1,0 +1,64 @@
+<h2 style="text-align: center">Edit test</h2>
+
+<div class="test-edit-container">
+	<div>
+		<input id="topic" name="topic" type="text" placeholder="Test topic..." class="topic" value="<?=$data['topic']?>">
+	</div>
+	<ol>
+
+		<?php $index=0; foreach($data['questions'] as $value): ?>
+		<li>
+			<textarea  class="answer-text"><?php echo trim($value["text"],"'") ?></textarea>
+			
+			<div class="answer-container">
+				<input type="radio" name="answer<?php echo $index ?>" value="1"
+					<?php if($value['correct_answer'] == '1' ) echo 'checked' ?>>
+				<textarea class="answer-text"><?php echo trim($value['answer_1'],"'") ?></textarea>
+			</div>
+
+			<div class="answer-container">
+				<input type="radio" name="answer<?php echo $index ?>" value="2"
+					<?php if($value['correct_answer'] == '2' ) echo 'checked' ?>> 
+				<textarea class="answer-text"><?php echo trim($value['answer_2'],"'") ?></textarea>		
+			</div>
+
+			<div class="answer-container">
+				<input type="radio" name="answer<?php echo $index ?>" value="3"
+				<?php if($value['correct_answer'] == '3' ) echo 'checked' ?>> 
+				<textarea class="answer-text"><?php echo trim($value['answer_3'],"'") ?></textarea>
+			</div>
+
+			<div class="answer-container">
+				<input type="radio" name="answer<?php echo $index ?>" value="4"
+				<?php if($value['correct_answer'] == '4' ) echo 'checked' ?>> 				
+				<textarea class="answer-text"><?php echo trim($value['answer_4'],"'") ?></textarea> <br>
+			</div>
+		</li>
+		<br>
+		<?php $index++; endforeach; ?>
+
+	</ol>
+</div>
+<p><button class="save-button" onclick="onClick()">Save</button></p>
+
+<script>
+	const onClick = () => {
+		const questions = JSON.parse('<?php echo json_encode($data["questions"]) ?>');
+		console.log(questions);
+		questions.forEach((q, qi) => {
+			const radios = document.getElementsByName(`answer${qi}`);
+			const length = radios.length;
+			for (let i = 0; i < length; i++) {
+				if (radios[i].checked) {
+					questions[qi]['correct_answer'] = radios[i].value;
+					break;
+				}
+			}
+		});
+		const topic = document.getElementById('topic').value;
+		const test = { topic, questions };
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', 'http://localhost/test/update', true);
+		xhr.send(JSON.stringify(test));
+	}
+</script>

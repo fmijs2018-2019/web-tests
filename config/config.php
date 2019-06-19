@@ -12,3 +12,4 @@ Config::set('auth_client_secret', 'EFzOZCGZo7LKBQR8SLmCKdZYWzq2JnAYNqLWnvCT20z75
 Config::set('db.host', 'localhost');
 Config::set('db.user', 'root');
 Config::set('db.password', '');
+Config::set('db.name', 'web-tests');

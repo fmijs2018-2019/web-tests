@@ -1,0 +1,107 @@
+table {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid black;
+	padding: 8px;
+}
+
+th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: rgb(221, 221, 221);
+	color: black;
+}
+
+.upload-form-container {
+	width: 60%;
+	margin: auto
+}
+
+.file-input-container {
+	width: 100%;
+	margin: 30px 0;
+	text-align: center;
+	border: solid 1px #d3394c;
+	background-color: rgb(255, 245, 246);
+	padding: 20px 0 50px 0;
+}
+
+.file-input-container button {
+	background-color: #d3394c;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	padding: 12px;
+	margin: 20px 0 0 0;
+	font-size: 1.2em;
+}
+
+.alert {
+	margin: 15px 0;
+	padding: 15px;
+	font-size: 1.2em;
+	background-color: #acc9f0;
+	color: rgb(21, 11, 163);
+	border-radius: 10px;
+}
+
+.js .inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile+label {
+	max-width: 160px;
+	width: 160px;
+	font-size: 1.25rem;
+	font-weight: 700;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: pointer;
+	display: inline-block;
+	overflow: hidden;
+	padding: 0.625rem 1.25rem;
+}
+
+.no-js .inputfile+label {
+	display: none;
+}
+
+.inputfile:focus+label, .inputfile.has-focus+label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile+label svg {
+	width: 1em;
+	height: 1em;
+	vertical-align: middle;
+	fill: currentColor;
+	margin-top: -0.25em;
+	margin-right: 0.25em;
+}
+
+.inputfile-2+label {
+	color: #d3394c;
+	border: 2px solid currentColor;
+}
+
+.inputfile-2:focus+label, .inputfile-2.has-focus+label, .inputfile-2+label:hover {
+	color: #722040;
+}
+
+#topic {
+	display: block;
+	width: 150px;
+	margin: 30px auto;
+	padding: 5px;
+}
