@@ -54,10 +54,11 @@ class TestController extends Controller
 
 	public function get($id)
 	{
-		$testTopic = $this->db->query("select topic from tests where id = " . $id);
+		$test = $this->db->query("select topic, id from tests where id = " . $id);
 		$questions = $this->db->query("select id, text, answer_1, answer_2, answer_3, answer_4, correct_answer from questions where test_id = " . $id);
 		$data = array();
-		$data['topic'] = $testTopic[0]['topic'];
+		$data['topic'] = $test[0]['topic'];
+		$data['id'] = $test[0]['id'];
 		$data['questions'] = $questions;
 
 		$view = $this->withLayout(
@@ -67,19 +68,20 @@ class TestController extends Controller
 		echo $content;
 	}
 
-	public function update()
+	public function update($id)
 	{
 		$test = json_decode(file_get_contents('php://input'));
 		$topic = $test->topic;
-		$this->db->query('update tests set topic =' . $this->db->quote($topic));
+		$this->db->query('update tests set topic = trim(both '.$this->db->quote('\'').' from ' . $this->db->quote($topic).')where id = '.$id);
 
-		foreach ($test->questions as $key => $value) { 
-			$updateQuery = 'update questions set text = "'. $this->db->quote($value->text) .'" , 
-			answer_1 = "'.$this->db->quote($value->answer_1).'", 
-			answer_2 ="'.$this->db->quote($value->answer_2).'", 
-			answer_3 ="'.$this->db->quote($value->answer_3).'", 
-			answer_4 ="'.$this->db->quote($value->answer_4).'", 
-			correct_answer =' . $value->correct_answer.'
+		foreach ($test->questions as $key => $value) {
+			$updateQuery = 'update questions set
+			text = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->text).') , 
+			answer_1 = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->answer_1).'), 
+			answer_2 = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->answer_2).'), 
+			answer_3 = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->answer_3).'), 
+			answer_4 = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->answer_4).'), 
+			correct_answer = trim(both '.$this->db->quote('\'').' from ' . $value->correct_answer.')
 			where id = '.$value->id;
 
 			$this->db->query($updateQuery);

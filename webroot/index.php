@@ -58,8 +58,8 @@ $router->mount('/test', function() use ($router) {
         $contoller->upload();
 	});
 	
-    $router->post('/update', function() use ($contoller) {
-        $contoller->update();
+    $router->post('/update/(\d+)', function($id) use ($contoller) {
+        $contoller->update($id);
 	});
 
 	$router->get('/get/(\d+)', function($id) use ($contoller) {
