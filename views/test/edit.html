@@ -8,7 +8,7 @@
 
 		<?php $index=0; foreach($data['questions'] as $value): ?>
 		<li>
-			<textarea  class="question<?php echo $index ?>"><?php echo trim($value["text"],"'") ?></textarea>
+			<textarea class="question<?php echo $index ?>"><?php echo trim($value["text"],"'") ?></textarea>
 			
 			<div class="answer-container<?php echo $index ?>">
 				<input type="radio" name="answer<?php echo $index ?>" value="1"

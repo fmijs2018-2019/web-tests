@@ -1,0 +1,75 @@
+<h2 style="text-align: center"><?=$data['topic']?></h2>
+
+<div class="test-container">
+	<ol>
+
+		<?php $index=0; foreach($data['questions'] as $value): ?>
+		<li>
+			<span class="question<?php echo $index ?>"><?php echo trim($value["text"],"'") ?></span>
+			<span id="correct-icon-<?php echo $index ?>" class="correct-icon"><i class="fa fa-check"></i></span>
+			<span id="wrong-icon-<?php echo $index ?>" class="wrong-icon"><i class="fa fa-times"></i></span>
+
+			<div class="answer-container<?php echo $index ?>">
+				<input type="radio" name="answer<?php echo $index ?>" value="1">
+				<span><?php echo trim($value['answer_1'],"'") ?></span>
+			</div>
+
+			<div class="answer-container<?php echo $index ?>">
+				<input type="radio" name="answer<?php echo $index ?>" value="2">
+				<span><?php echo trim($value['answer_2'],"'") ?></span>
+			</div>
+
+			<div class="answer-container<?php echo $index ?>">
+				<input type="radio" name="answer<?php echo $index ?>" value="3">
+				<span><?php echo trim($value['answer_3'],"'") ?></span>
+			</div>
+
+			<div class="answer-container<?php echo $index ?>">
+				<input type="radio" name="answer<?php echo $index ?>" value="4">
+				<span><?php echo trim($value['answer_4'],"'") ?></span> <br>
+			</div>
+		</li>
+		<br>
+		<?php $index++; endforeach; ?>
+
+	</ol>
+</div>
+<p><button id="submit-button" class="submit-button">Submit</button></p>
+
+<script>
+	document.getElementById('submit-button').addEventListener('click', onClick);
+
+	function onClick() {
+		const questions = JSON.parse(`<?php echo json_encode($data["questions"]) ?>`);
+		const testId = JSON.parse(`<?php echo json_encode($data["id"]) ?>`);
+		const userId = JSON.parse(`<?php echo json_encode($data["user"]["sub"]) ?>`);
+
+		const result = {
+			testId: testId,
+			questionsCount: questions.length,
+			correctAnswers: 0,
+			userId: userId
+		}
+
+		questions.forEach((q, qi) => {
+			questions[qi]['text'] = document.getElementsByClassName(`question${qi}`)[0].value;
+			const answers = document.getElementsByClassName(`answer-container${qi}`);
+
+			for (let i = 0; i < answers.length; i++) {
+				if (answers[i].children[0].checked) {
+					if (questions[qi]['correct_answer'] === answers[i].children[0].value) {
+						document.getElementById(`correct-icon-${qi}`).style.display = 'inline';
+						document.getElementById(`wrong-icon-${qi}`).style.display = 'none';
+						result.correctAnswers++;
+					} else {
+						document.getElementById(`correct-icon-${qi}`).style.display = 'none';
+						document.getElementById(`wrong-icon-${qi}`).style.display = 'inline';
+					}
+					break;
+				}
+			}
+		});
+
+		console.log(result);
+	}
+</script>

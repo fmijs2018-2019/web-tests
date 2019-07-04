@@ -9,6 +9,8 @@
 	<link rel="stylesheet" type="text/css" href="<?=Config::get('site_url')?>/webroot/css/main.css">
 	<link rel="stylesheet" type="text/css" href="<?=Config::get('site_url')?>/webroot/css/testupload.css">
 	<link rel="stylesheet" type="text/css" href="<?=Config::get('site_url')?>/webroot/css/testedit.css">
+	<link rel="stylesheet" type="text/css" href="<?=Config::get('site_url')?>/webroot/css/testsolve.css">
+	<link rel="stylesheet" type="text/css" href="<?=Config::get('site_url')?>/webroot/css/testslist.css">
 	<!-- font-awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<meta charset="utf-8">
@@ -19,7 +21,7 @@
 		<div class="navbar">
 			<ul>
 				<li><a href="/home">Home</a></li>
-				<li><a href="/home/about">About</a></li>
+				<li><a href="/test/get">Tests</a></li>
 				<?php if((new Auth())->isAuthenticated()) : ?>
 				<li><a href="/auth/profile">Profile</a></li>
 				<li><a href="/test">My tests</a></li>

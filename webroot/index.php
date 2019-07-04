@@ -13,65 +13,73 @@ $router = new Router();
 $router->setBasePath('');
 
 // auth routes
-$router->mount('/auth', function() use ($router) {
+$router->mount('/auth', function () use ($router) {
 	$contoller = new AuthController();
 
-    $router->get('/login', function() use ($contoller) {
-        $contoller->login();
-    });
-
-    $router->get('/logout', function() use ($contoller) {
-        $contoller->logout();
+	$router->get('/login', function () use ($contoller) {
+		$contoller->login();
 	});
-	
-	$router->get('/callback', function() use ($contoller){
+
+	$router->get('/logout', function () use ($contoller) {
+		$contoller->logout();
+	});
+
+	$router->get('/callback', function () use ($contoller) {
 		$contoller->callback();
 	});
 
-	$router->get('/profile', function() use ($contoller){
+	$router->get('/profile', function () use ($contoller) {
 		$contoller->profile();
 	});
 });
 
 // home routes
-$router->mount('/home', function() use ($router) {
+$router->mount('/home', function () use ($router) {
 	$contoller = new HomeController();
 
-    $router->get('/about', function() use ($contoller) {
-        $contoller->about();
-    });
-
-    $router->get('/index', function() use ($contoller) {
-        $contoller->index();
+	$router->get('/about', function () use ($contoller) {
+		$contoller->about();
 	});
-	
-	$router->get('/', function() use ($contoller){
+
+	$router->get('/index', function () use ($contoller) {
+		$contoller->index();
+	});
+
+	$router->get('/', function () use ($contoller) {
 		$contoller->index();
 	});
 });
 
 // test routes
-$router->mount('/test', function() use ($router) {
+$router->mount('/test', function () use ($router) {
 	$contoller = new TestController();
 
-    $router->post('/upload', function() use ($contoller) {
-        $contoller->upload();
-	});
-	
-    $router->post('/update/(\d+)', function($id) use ($contoller) {
-        $contoller->update($id);
+	$router->post('/upload', function () use ($contoller) {
+		$contoller->upload();
 	});
 
-	$router->get('/get/(\d+)', function($id) use ($contoller) {
-        $contoller->get($id);
+	$router->post('/update/(\d+)', function ($id) use ($contoller) {
+		$contoller->update($id);
 	});
 
-	$router->get('/', function() use ($contoller){
+	$router->get('/get', function () use ($contoller) {
+		$contoller->getAll();
+	});
+
+	$router->get('/get/(\d+)', function ($id) use ($contoller) {
+		$contoller->solve($id);
+	});
+
+	$router->get('/edit/(\d+)', function ($id) use ($contoller) {
+		$contoller->edit($id);
+	});
+
+	$router->get('/', function () use ($contoller) {
 		$contoller->index();
 	});
 });
 
-$router->get('', function() {
+$router->get('', function () {
 	$contoller = new HomeController();
 	$contoller->index();
 });

@@ -1,14 +1,17 @@
 <?php
+
 use function GuzzleHttp\json_encode;
 
 class TestController extends Controller
 {
 
 	private $db;
+	private $auth;
 
 	function __construct()
 	{
 		$this->db = new DB();
+		$this->auth = new Auth();
 	}
 
 	public function index()
@@ -24,7 +27,6 @@ class TestController extends Controller
 	public function upload()
 	{
 		if (isset($_FILES['file'])) {
-			var_dump($_FILES);
 			$file = $_FILES['file']['tmp_name'];
 			$handle = fopen($file, "r");
 			$c = 0;
@@ -52,6 +54,17 @@ class TestController extends Controller
 		}
 	}
 
+	public function getAll()
+	{
+		$data = $this->db->query("select * from tests");
+
+		$view = $this->withLayout(
+			new View($data, VIEWS_PATH . DS . 'test' . DS . 'all.html')
+		);
+
+		echo $view->render();
+	}
+
 	public function get($id)
 	{
 		$test = $this->db->query("select topic, id from tests where id = " . $id);
@@ -61,37 +74,49 @@ class TestController extends Controller
 		$data['id'] = $test[0]['id'];
 		$data['questions'] = $questions;
 
+		return $data;
+	}
+ 
+	public function solve($id)
+	{ 
+		$data = $this->get($id);
+		$data['user'] = $this->auth->getUser();
+
+		$view = $this->withLayout(
+			new View($data, VIEWS_PATH . DS . 'test' . DS . 'solve.html')
+		);
+
+		echo $view->render();
+	}
+
+	public function edit($id)
+	{ 
+		$data = $this->get($id);
+
 		$view = $this->withLayout(
 			new View($data, VIEWS_PATH . DS . 'test' . DS . 'edit.html')
 		);
-		$content = $view->render();
-		echo $content;
+
+		echo $view->render();
 	}
 
 	public function update($id)
 	{
 		$test = json_decode(file_get_contents('php://input'));
 		$topic = $test->topic;
-		$this->db->query('update tests set topic = trim(both '.$this->db->quote('\'').' from ' . $this->db->quote($topic).')where id = '.$id);
+		$this->db->query('update tests set topic = trim(both ' . $this->db->quote('\'') . ' from ' . $this->db->quote($topic) . ')where id = ' . $id);
 
 		foreach ($test->questions as $key => $value) {
 			$updateQuery = 'update questions set
-			text = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->text).') , 
-			answer_1 = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->answer_1).'), 
-			answer_2 = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->answer_2).'), 
-			answer_3 = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->answer_3).'), 
-			answer_4 = trim(both '.$this->db->quote('\'').' from '.$this->db->quote($value->answer_4).'), 
-			correct_answer = trim(both '.$this->db->quote('\'').' from ' . $value->correct_answer.')
-			where id = '.$value->id;
+			text = trim(both ' . $this->db->quote('\'') . ' from ' . $this->db->quote($value->text) . ') , 
+			answer_1 = trim(both ' . $this->db->quote('\'') . ' from ' . $this->db->quote($value->answer_1) . '), 
+			answer_2 = trim(both ' . $this->db->quote('\'') . ' from ' . $this->db->quote($value->answer_2) . '), 
+			answer_3 = trim(both ' . $this->db->quote('\'') . ' from ' . $this->db->quote($value->answer_3) . '), 
+			answer_4 = trim(both ' . $this->db->quote('\'') . ' from ' . $this->db->quote($value->answer_4) . '), 
+			correct_answer = trim(both ' . $this->db->quote('\'') . ' from ' . $value->correct_answer . ')
+			where id = ' . $value->id;
 
 			$this->db->query($updateQuery);
 		}
-
-		// $insertQuestionsQuery = 'insert into questions ( test_id, text, answer_1, answer_2, answer_3, answer_4, correct_answer ) values ';
-		// foreach ($test->questions as $key => $value) {
-		// 	$insertQuestionsQuery .= '("' . $testId . '", "' . $value->question . '", "' . $value->answer_1 . '", "' . $value->answer_2 . '", "' . $value->answer_3 . '", "' . $value->answer_4 . '", "' . $value->correct_answer . '"),';
-		// }
-		// $insertQuestionsQuery = rtrim($insertQuestionsQuery, ", ");
-		// $this->db->query($insertQuestionsQuery);
 	}
 }

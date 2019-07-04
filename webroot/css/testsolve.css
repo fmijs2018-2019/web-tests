@@ -1,0 +1,31 @@
+.test-container {
+	width: 60%;
+	margin: auto;
+	border: solid 1px lightgray;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.submit-button {
+	display: block;
+	background-color: #09a335;
+	color: white;
+	border: none;
+	border-radius: 15px;
+	width: 80px;
+	padding: 12px;
+	margin: 20px auto;
+	font-size: 1.2em;
+}
+
+.correct-icon, .fa-check {
+	color: green;
+}
+
+.wrong-icon, .fa-times {
+	color: red;
+}
+
+.correct-icon, .wrong-icon {
+	display: none;
+}

@@ -85,57 +85,57 @@
 				const id = +this.response;
 				window.location.href = '/test/get/' + id;
 
-				// const questions = JSON.parse(this.response);
-				// if (questions) {
-				// 	const questionsList = document.getElementById('questions-list');
-				// 	const topicElement = document.createElement('p');
-				// 	topicElement.innerHTML = `
-				// 	<div>
-				// 		<label for="topic">Test topic: </label>
-				// 		<input name="topic" type="text" id="topic">
-				// 	</div>`;
-				// 	questionsList.parentElement.insertBefore(topicElement, questionsList);
-				// 	questions.forEach((q, qi) => {
-				// 		const domElement = document.createElement('li');
-				// 		const answers = [q.answer_1, q.answer_2, q.answer_3, q.answer_4].map((a, i) => {
-				// 			return `<input type="radio" name="answer${qi}" ${i + 1 === +q.correct_answer ? 'checked="checked"' : ''} value="${i + 1}"> ${i + 1}`
-				// 		}).join('');
-				// 		const innerHtml = `
-				// 			<div>${q['question']}</div>
-				// 			<div>	•	${q['answer_1']}</div>
-				// 			<div>	•	${q['answer_2']}</div>
-				// 			<div>	•	${q['answer_3']}</div>
-				// 			<div>	•	${q['answer_4']}</div> <br>
-				// 			<div>Correct answer: </div>
-				// 			${answers}
-				// 			<br>`;
+				const questions = JSON.parse(this.response);
+				if (questions) {
+					const questionsList = document.getElementById('questions-list');
+					const topicElement = document.createElement('p');
+					topicElement.innerHTML = `
+					<div>
+						<label for="topic">Test topic: </label>
+						<input name="topic" type="text" id="topic">
+					</div>`;
+					questionsList.parentElement.insertBefore(topicElement, questionsList);
+					questions.forEach((q, qi) => {
+						const domElement = document.createElement('li');
+						const answers = [q.answer_1, q.answer_2, q.answer_3, q.answer_4].map((a, i) => {
+							return `<input type="radio" name="answer${qi}" ${i + 1 === +q.correct_answer ? 'checked="checked"' : ''} value="${i + 1}"> ${i + 1}`
+						}).join('');
+						const innerHtml = `
+							<div>${q['question']}</div>
+							<div>	•	${q['answer_1']}</div>
+							<div>	•	${q['answer_2']}</div>
+							<div>	•	${q['answer_3']}</div>
+							<div>	•	${q['answer_4']}</div> <br>
+							<div>Correct answer: </div>
+							${answers}
+							<br>`;
 
-				// 		domElement.innerHTML = innerHtml;
-				// 		questionsList.appendChild(domElement);
-				// 	});
+						domElement.innerHTML = innerHtml;
+						questionsList.appendChild(domElement);
+					});
 
-				// 	const saveButton = document.createElement('button');
-				// 	saveButton.innerText = 'Save';
-				// 	saveButton.onclick = () => {
-				// 		questions.forEach((q, qi) => {
-				// 			const radios = document.getElementsByName(`answer${qi}`);
+					const saveButton = document.createElement('button');
+					saveButton.innerText = 'Save';
+					saveButton.onclick = () => {
+						questions.forEach((q, qi) => {
+							const radios = document.getElementsByName(`answer${qi}`);
 
-				// 			const length = radios.length;
-				// 			for (let i = 0; i < length; i++) {
-				// 				if (radios[i].checked) {
-				// 					questions[qi]['correct_answer'] = radios[i].value;
-				// 					break;
-				// 				}
-				// 			}
-				// 		});
-				// 		const topic = document.getElementById('topic').value;
-				// 		const test = { topic, questions };
-				// 		const xhr = new XMLHttpRequest();
-				// 		xhr.open('POST', 'http://localhost/test/save', true);
-				// 		xhr.send(JSON.stringify(test));
-				// 	}
-				// 	questionsList.parentElement.appendChild(saveButton);
-				// }
+							const length = radios.length;
+							for (let i = 0; i < length; i++) {
+								if (radios[i].checked) {
+									questions[qi]['correct_answer'] = radios[i].value;
+									break;
+								}
+							}
+						});
+						const topic = document.getElementById('topic').value;
+						const test = { topic, questions };
+						const xhr = new XMLHttpRequest();
+						xhr.open('POST', 'http://localhost/test/save', true);
+						xhr.send(JSON.stringify(test));
+					}
+					questionsList.parentElement.appendChild(saveButton);
+				}
 
 			};
 		};
