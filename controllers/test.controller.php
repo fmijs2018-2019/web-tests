@@ -16,12 +16,23 @@ class TestController extends Controller
 
 	public function index()
 	{
-		$data = array();
+		$data = $this->db->query("select * from tests");
+
 		$view = $this->withLayout(
 			new View($data, VIEWS_PATH . DS . 'test' . DS . 'index.html')
 		);
-		$content = $view->render();
-		echo $content;
+
+		echo $view->render();
+	}
+
+	public function uploadView()
+	{
+		$data = array();
+		$view = $this->withLayout(
+			new View($data, VIEWS_PATH.DS.'test'.DS.'upload.html')
+		);
+
+		echo $view->render();
 	}
 
 	public function upload()
@@ -52,17 +63,6 @@ class TestController extends Controller
 
 			echo $testId;
 		}
-	}
-
-	public function getAll()
-	{
-		$data = $this->db->query("select * from tests");
-
-		$view = $this->withLayout(
-			new View($data, VIEWS_PATH . DS . 'test' . DS . 'all.html')
-		);
-
-		echo $view->render();
 	}
 
 	public function get($id)

@@ -62,8 +62,8 @@ $router->mount('/test', function () use ($router) {
 		$contoller->update($id);
 	});
 
-	$router->get('/get', function () use ($contoller) {
-		$contoller->getAll();
+	$router->get('/create', function () use ($contoller) {
+		$contoller->uploadView();
 	});
 
 	$router->get('/get/(\d+)', function ($id) use ($contoller) {
