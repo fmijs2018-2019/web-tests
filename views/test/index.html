@@ -1,33 +1,53 @@
 <div class="tests-container">
 	<h2>All tests</h2>
-	<button onclick="testsGroup = 'mine'; onSearchChange()">Mine</button>
-	<button onclick="testsGroup = 'all'; onSearchChange()">All</button>
+	<button class="filter-button" id="filter-mine" onclick="changeFilter('mine')">Mine</button>
+	<button class="filter-button" id="filter-all" onclick="changeFilter('all')">All</button>
 
-	<input type="text" id="search-input" onkeyup="onSearchChange()" placeholder="Search for names.." title="Type in a name">
+	<input type="text" id="search-input" onkeyup="applyFilters()" placeholder="Search for names.." title="Type in a name">
 
 	<ul id="tests-list">
 		<?php foreach($data as $test) { ?>
-		<li class="all <?php if($test['isMine']) echo 'mine'; ?>"><a href="/tests/<?php echo $test['id'] ?>"><?php echo $test['topic'] ?></a></li>
+		<li class="all <?php if($test['isMine']) echo 'mine'; ?>">
+			<span><?php echo $test['topic'] ?></span>
+			<span>
+				<span><a class="<?php if($test['isMine']) echo 'visible'; else echo 'hidden'?>" href="/tests/<?php echo $test['id'] ?>/edit">Edit</a></span>
+				<span><a href="/tests/<?php echo $test['id'] ?>">Solve</a></span>
+			</span>
+		</li>
 		<?php } ?>
 	</ul>
 </div>
 
 <script>
-	let testsGroup = 'all';
-	function onSearchChange() {
-		debugger;
+	let classFilter = 'all';
+
+	function changeFilter(filter) {
+		classFilter = filter;
+
+		if(filter === 'all') {
+			document.getElementById('filter-all').style.backgroundColor = '#1b7b36';
+			document.getElementById('filter-mine').style.backgroundColor = 'grey';
+		} else if(filter === 'mine') {
+			document.getElementById('filter-all').style.backgroundColor = 'grey';
+			document.getElementById('filter-mine').style.backgroundColor = '#1b7b36';
+		}
+
+		applyFilters();
+	}
+
+	function applyFilters() {
 		var input, filter, ul, li, a, i, txtValue;
-		input = document.getElementById("search-input");
+		input = document.getElementById('search-input');
 		filter = input.value.toUpperCase();
-		ul = document.getElementById("tests-list");
-		li = ul.getElementsByClassName(testsGroup);
+		ul = document.getElementById('tests-list');
+		li = ul.getElementsByClassName('all');
 		for (i = 0; i < li.length; i++) {
-			a = li[i].getElementsByTagName("a")[0];
-			txtValue = a.textContent || a.innerText;
-			if (txtValue.toUpperCase().indexOf(filter) > -1) {
-				li[i].style.display = "";
+			span = li[i].getElementsByTagName("span")[0];
+			txtValue = span.textContent || span.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1 && li[i].classList.contains(classFilter) ) {
+				li[i].style.display = '';
 			} else {
-				li[i].style.display = "none";
+				li[i].style.display = 'none';
 			}
 		}
 	}
