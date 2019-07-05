@@ -18,6 +18,10 @@ class TestController extends Controller
 	{
 		$data = $this->db->query("select * from tests");
 
+		for ($i = 0; $i < count($data); $i++) {
+			$data[$i]["isMine"] = $data[$i]['created_by'] == $this->auth->getUser()["sub"];
+		}
+
 		$view = $this->withLayout(
 			new View($data, VIEWS_PATH . DS . 'test' . DS . 'index.html')
 		);
@@ -41,7 +45,7 @@ class TestController extends Controller
 			$file = $_FILES['file']['tmp_name'];
 			$handle = fopen($file, "r");
 			$c = 0;
-			$this->db->query('insert into tests ( created_by, topic ) values ( 1, ' . $this->db->quote($_FILES['file']['name']) . ' )');
+			$this->db->query('insert into tests ( created_by, topic ) values ('.$this->db->quote($this->auth->getUser()["sub"]).', ' . $this->db->quote($_FILES['file']['name']) . ' )');
 			$testId = $this->db->lastInsertId();
 			$insertQuestionsQuery = 'insert into questions ( test_id, text, answer_1, answer_2, answer_3, answer_4, correct_answer ) values ';
 
@@ -57,7 +61,6 @@ class TestController extends Controller
 				}
 				$c = $c + 1;
 			}
-
 			$insertQuestionsQuery = rtrim($insertQuestionsQuery, ', ');
 			$this->db->query($insertQuestionsQuery);
 

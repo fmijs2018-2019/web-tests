@@ -1,22 +1,26 @@
 <div class="tests-container">
 	<h2>All tests</h2>
+	<button onclick="testsGroup = 'mine'; onSearchChange()">Mine</button>
+	<button onclick="testsGroup = 'all'; onSearchChange()">All</button>
 
-	<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+	<input type="text" id="search-input" onkeyup="onSearchChange()" placeholder="Search for names.." title="Type in a name">
 
-	<ul id="myUL">
+	<ul id="tests-list">
 		<?php foreach($data as $test) { ?>
-		<li><a href="/test/get/<?php echo $test['id'] ?>"><?php echo $test['topic'] ?></a></li>
+		<li class="all <?php if($test['isMine']) echo 'mine'; ?>"><a href="/tests/<?php echo $test['id'] ?>"><?php echo $test['topic'] ?></a></li>
 		<?php } ?>
 	</ul>
 </div>
 
 <script>
-	function myFunction() {
+	let testsGroup = 'all';
+	function onSearchChange() {
+		debugger;
 		var input, filter, ul, li, a, i, txtValue;
-		input = document.getElementById("myInput");
+		input = document.getElementById("search-input");
 		filter = input.value.toUpperCase();
-		ul = document.getElementById("myUL");
-		li = ul.getElementsByTagName("li");
+		ul = document.getElementById("tests-list");
+		li = ul.getElementsByClassName(testsGroup);
 		for (i = 0; i < li.length; i++) {
 			a = li[i].getElementsByTagName("a")[0];
 			txtValue = a.textContent || a.innerText;

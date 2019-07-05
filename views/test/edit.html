@@ -63,7 +63,7 @@
 		const test = { topic, questions };
 		console.log(test);
 		const xhr = new XMLHttpRequest();
-		xhr.open('POST', `http://localhost/test/update/${testId}`, true);
+		xhr.open('POST', `http://localhost/tests/${testId}`, true);
 		xhr.send(JSON.stringify(test));
 	}
 </script>

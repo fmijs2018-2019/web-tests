@@ -51,26 +51,26 @@ $router->mount('/home', function () use ($router) {
 });
 
 // test routes
-$router->mount('/test', function () use ($router) {
+$router->mount('/tests', function () use ($router) {
 	$contoller = new TestController();
 
 	$router->post('/upload', function () use ($contoller) {
 		$contoller->upload();
 	});
 
-	$router->post('/update/(\d+)', function ($id) use ($contoller) {
+	$router->post('/(\d+)', function ($id) use ($contoller) {
 		$contoller->update($id);
 	});
 
-	$router->get('/create', function () use ($contoller) {
+	$router->get('/new', function () use ($contoller) {
 		$contoller->uploadView();
 	});
 
-	$router->get('/get/(\d+)', function ($id) use ($contoller) {
+	$router->get('/(\d+)', function ($id) use ($contoller) {
 		$contoller->solve($id);
 	});
 
-	$router->get('/edit/(\d+)', function ($id) use ($contoller) {
+	$router->get('/(\d+)/edit', function ($id) use ($contoller) {
 		$contoller->edit($id);
 	});
 
