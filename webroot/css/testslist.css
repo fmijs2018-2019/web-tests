@@ -15,7 +15,7 @@
 	margin: 0;
 }
 
-#tests-list li a {
+#tests-list li {
 	border: 1px solid #ddd;
 	margin-top: -1px;
 	/* Prevent double borders */
@@ -24,14 +24,39 @@
 	text-decoration: none;
 	font-size: 18px;
 	color: black;
-	display: block
+	display: flex;
+	justify-content: space-between;
 }
 
-#tests-list li a:hover:not(.header) {
+#tests-list li:hover:not(.header) {
 	background-color: #eee;
 }
 
 .tests-container {
 	width: 80%;
 	margin: auto;
+}
+
+.visible {
+	display: '';
+}
+
+.hidden {
+	display: none;
+}
+
+.filter-button {
+	display: inline-block;
+	background-color: #1b7b36;
+	color: white;
+	border: none;
+	border-radius: 10px;
+	width: 70px;
+	padding: 5px;
+	margin: 10px auto;
+	font-size: 1.2em;
+}
+
+#filter-mine {
+	background-color: grey;
 }
