@@ -37,10 +37,6 @@ $router->mount('/auth', function () use ($router) {
 $router->mount('/home', function () use ($router) {
 	$contoller = new HomeController();
 
-	$router->get('/about', function () use ($contoller) {
-		$contoller->about();
-	});
-
 	$router->get('/index', function () use ($contoller) {
 		$contoller->index();
 	});
