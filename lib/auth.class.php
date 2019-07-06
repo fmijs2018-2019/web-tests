@@ -72,48 +72,6 @@ class Auth
 		} catch (ApiException $e) {
 			die($e->getMessage());
 		}
-		// // Handle errors sent back by Auth0.
-		// if (!empty($_POST['error']) || !empty($_POST['error_description'])) {
-		// 	throw new Exception($_POST['error_description']);
-		// }
-
-		// // Nothing to do.
-		// if (empty($_GET['code'])) {
-		// 	throw new Exception('No authorization code found.');
-		// }
-
-		// // Validate callback state.
-		// $session_store = new SessionStore();
-		// $state_handler = new SessionStateHandler($session_store);
-		// if (!isset($_GET['state']) || !$state_handler->validate($_GET['state'])) {
-		// 	throw new Exception('Invalid state.');
-		// }
-
-		// // Instantiate the Authentication class with the client secret.
-		// $auth0_api = new Authentication(
-		// 	Config::get('auth_domain'),
-		// 	Config::get('auth_client_id'),
-		// 	Config::get('auth_client_secret'),
-		// );
-
-		// try {
-		// 	// Attempt to get an access_token with the code returned and original redirect URI.
-		// 	$code_exchange_result = $auth0_api->code_exchange($_GET['code'], Config::get('auth_login_url'));
-		// 	var_dump($code_exchange_result);
-		// } catch (Exception $e) {
-		// 	// This could be an Exception from the SDK or the HTTP client.
-		// 	die($e->getMessage());
-		// }
-
-		// try {
-		// 	// Attempt to get an access_token with the code returned and original redirect URI.
-		// 	$userinfo_result = $auth0_api->userinfo($code_exchange_result['access_token']);
-		// } catch (Exception $e) {
-		// 	die($e->getMessage());
-		// }
-
-		// // $session_store->set('user', $userinfo_result);
-		// return $userinfo_result;
 	}
 
 	public function getUser()
@@ -138,19 +96,42 @@ class Auth
 	}
 
 
-	public function getDecodedToken()
+	public function checkJwt()
 	{
+		$requestHeaders = apache_request_headers();
+
+		if (!isset($requestHeaders['authorization']) && !isset($requestHeaders['Authorization'])) {
+			header('HTTP/1.0 401 Unauthorized');
+			header('Content-Type: application/json; charset=utf-8');
+			echo json_encode(array("message" => "No token provided."));
+			exit();
+		}
+
+		$authorizationHeader = isset($requestHeaders['authorization']) ? $requestHeaders['authorization'] : $requestHeaders['Authorization'];
+
+		if ($authorizationHeader == null) {
+			header('HTTP/1.0 401 Unauthorized');
+			header('Content-Type: application/json; charset=utf-8');
+			echo json_encode(array("message" => "No authorization header sent."));
+			exit();
+		}
+
+		$authorizationHeader = str_replace('bearer ', '', $authorizationHeader);
+		$token = str_replace('Bearer ', '', $authorizationHeader);
+
 		try {
 			$verifier = new JWTVerifier([
 				'supported_algs' => ['RS256'],
-				'valid_audiences' => ['6e69b412-838a-4413-bdfb-29423dfcbf52'],
-				'authorized_iss' => ['https://fmijs.eu.auth0.com/']
+				'valid_audiences' => [Config::get('auth_client_id')],
+				'authorized_iss' => [Config::get('auth_domain')]
 			]);
 
-			$token = $this->getIdToken();
-			return $verifier->verifyAndDecode($token);
-		} catch (CoreException $e) {
-			throw $e;
+			$this->tokenInfo = $verifier->verifyAndDecode($token);
+		} catch (\Auth0\SDK\Exception\CoreException $e) {
+			header('HTTP/1.0 401 Unauthorized');
+			header('Content-Type: application/json; charset=utf-8');
+			echo json_encode(array("message" => $e->getMessage()));
+			exit();
 		}
 	}
 

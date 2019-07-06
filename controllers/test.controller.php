@@ -14,7 +14,7 @@ class TestController extends Controller
 		$this->auth = new Auth();
 	}
 
-	public function index()
+	public function indexView()
 	{
 		$data = $this->db->query("select * from tests");
 
@@ -68,7 +68,7 @@ class TestController extends Controller
 		}
 	}
 
-	public function get($id)
+	private function get($id)
 	{
 		$test = $this->db->query("select id, topic, created_at, created_by from tests where id = " . $id);
 		$questions = $this->db->query("select id, text, answer_1, answer_2, answer_3, answer_4, correct_answer from questions where test_id = " . $id);
@@ -80,7 +80,7 @@ class TestController extends Controller
 		return $data;
 	}
  
-	public function solve($id)
+	public function solveView($id)
 	{ 
 		$data = $this->get($id);
 		$data['user'] = $this->auth->getUser();
@@ -92,7 +92,7 @@ class TestController extends Controller
 		echo $view->render();
 	}
 
-	public function edit($id)
+	public function editView($id)
 	{ 
 		$data = $this->get($id);
 

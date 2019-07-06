@@ -12,13 +12,13 @@ class ResultController extends Controller
 		$this->repo = new Repository();
 	}
 
-	public function getById($id)
+	public function detailedView($id)
 	{
 		$testResult = $this->repo->getTestResultById($id);
 		$answers = $this->repo->getAnswerResultsByTestResultId($id);
 		$test = $this->repo->getTestById($testResult->testId);
 		$questions = $this->repo->getQuestionsByTestId($testResult->testId);
-
+		
 		$data = array();
 		$data['testResult'] = $testResult;
 		$data['answers'] = $answers;

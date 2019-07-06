@@ -60,6 +60,24 @@ class Repository
 		}
 	}
 
+	function getTestResultsByUserId($id)
+	{
+		$userId = $this->db->quote($id);
+		$data = $this->db->query('select id, test_id, user_id, correct_answers, questions_count, created_at from test_results where user_id = ' . $userId);
+		$result = array();
+		foreach($data as $d) {
+			$tResult = new TestResult();
+			$tResult->id = (int) $d['id'];
+			$tResult->testId = (int) $d['test_id'];
+			$tResult->userId = $d['user_id'];
+			$tResult->correctAnswers = (int) $d['correct_answers'];
+			$tResult->questionsCount = (int) $d['questions_count'];
+			$tResult->createdAt = $d['created_at'];
+			array_push($result, $tResult);
+		}
+		return $result;
+	}
+
 	function getAnswerResultsByTestResultId($id)
 	{
 		$data = $this->db->query('select id, test_result_id, correct_answer, given_answer, question_id, question_text from answer_results where test_result_id = ' . $id);

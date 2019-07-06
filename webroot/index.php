@@ -29,20 +29,33 @@ $router->mount('/auth', function () use ($router) {
 	});
 
 	$router->get('/profile', function () use ($contoller) {
-		$contoller->profile();
+		$contoller->profileView();
 	});
+});
+
+$router->before('GET', '/auth/profile', function () {
+	$auth = new Auth();
+	$authController = new AuthController();
+	if (!$auth->isAuthenticated()) { 
+		$authController->_401View();
+		exit();
+	}
 });
 
 // home routes
 $router->mount('/home', function () use ($router) {
 	$contoller = new HomeController();
 
+	$router->get('/about', function () use ($contoller) {
+		$contoller->aboutView();
+	});
+
 	$router->get('/index', function () use ($contoller) {
-		$contoller->index();
+		$contoller->indexView();
 	});
 
 	$router->get('/', function () use ($contoller) {
-		$contoller->index();
+		$contoller->indexView();
 	});
 });
 
@@ -51,7 +64,7 @@ $router->mount('/results', function () use ($router) {
 	$contoller = new ResultController();
 
 	$router->get('/(\d+)', function ($id) use ($contoller) {
-		$contoller->getById($id);
+		$contoller->detailedView($id);
 	});
 
 	$router->get('/index', function () use ($contoller) {
@@ -62,6 +75,15 @@ $router->mount('/results', function () use ($router) {
 	$router->post('/submit', function () use ($contoller) {
 		$contoller->submit();
 	});
+});
+
+$router->before('GET|POST', '/results.*', function () {
+	$auth = new Auth();
+	$authController = new AuthController();
+	if (!$auth->isAuthenticated()) { 
+		$authController->_401View();
+		exit();
+	}
 });
 
 // test routes
@@ -81,23 +103,31 @@ $router->mount('/tests', function () use ($router) {
 	});
 
 	$router->get('/(\d+)', function ($id) use ($contoller) {
-		$contoller->solve($id);
+		$contoller->solveView($id);
 	});
 
 	$router->get('/(\d+)/edit', function ($id) use ($contoller) {
-		$contoller->edit($id);
+		$contoller->editView($id);
 	});
 
 	$router->get('/', function () use ($contoller) {
-		$contoller->index();
+		$contoller->indexView();
 	});
+});
+
+$router->before('GET|POST', '/tests.*', function () {
+	$auth = new Auth();
+	$authController = new AuthController();
+	if (!$auth->isAuthenticated()) { 
+		$authController->_401View();
+		exit();
+	}
 });
 
 $router->get('', function () {
 	$contoller = new HomeController();
-	$contoller->index();
+	$contoller->indexView();
 });
 
 
 $router->run();
-// App::run($_SERVER['REQUEST_URI']);
