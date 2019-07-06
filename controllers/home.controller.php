@@ -4,7 +4,7 @@ use function GuzzleHttp\json_encode;
 class HomeController extends Controller
 {
 	
-    public function index(){
+    public function indexView(){
 		$data = array();
         $view = $this->withLayout(
 			new View($data, VIEWS_PATH.DS.'home'.DS.'index.html')
@@ -13,7 +13,7 @@ class HomeController extends Controller
 		echo $content;
 	}
 	
-	public function about(){
+	public function aboutView(){
 		$data = array();
         $view = $this->withLayout(
 			new View($data, VIEWS_PATH.DS.'home'.DS.'about.html')
