@@ -14,9 +14,16 @@ class ResultController extends Controller
 
 	public function getById($id)
 	{
+		$testResult = $this->repo->getTestResultById($id);
+		$answers = $this->repo->getAnswerResultsByTestResultId($id);
+		$test = $this->repo->getTestById($testResult->testId);
+		$questions = $this->repo->getQuestionsByTestId($testResult->testId);
+
 		$data = array();
-		$data['testResult'] = $this->repo->getTestResultById($id);
-		$data['answers'] = $this->repo->getAnswerResultsByTestResultId($id);
+		$data['testResult'] = $testResult;
+		$data['answers'] = $answers;
+		$data['questions'] = $questions;
+		$data['test'] = $test;
 
 		$view = $this->withLayout(
 			new View($data, VIEWS_PATH . DS . 'result' . DS . 'detailed.html')
@@ -38,7 +45,7 @@ class ResultController extends Controller
 
 			$test = $this->repo->getTestById($testId);
 			$questions = $this->repo->getQuestionsByTestId($testId);
-			
+
 			$correctAnswers = 0;
 			$answerDtos = array();
 			foreach ($answers as $answer) {
@@ -71,4 +78,5 @@ class ResultController extends Controller
 			echo $testResultId;
 		}
 	}
+
 }

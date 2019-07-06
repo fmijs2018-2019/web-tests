@@ -1,4 +1,4 @@
-.test-solve-container {
+.result-detailed-container {
 	width: 60%;
 	margin: auto;
 	border: solid 1px lightgray;
@@ -6,7 +6,15 @@
 	padding: 20px;
 }
 
-.submit-button {
+.correct-icon, .fa-check {
+	color: green;
+}
+
+.wrong-icon, .fa-times {
+	color: red;
+}
+
+.export-button {
 	display: block;
 	background-color: #09a335;
 	color: white;
