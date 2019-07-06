@@ -2,13 +2,13 @@
 
 <div class="test-edit-container">
 	<div>
-		<input id="topic" name="topic" type="text" placeholder="Test topic..." class="topic" value="<?=$data['topic']?>">
+		<textarea id="topic" type="text" placeholder="Test topic..." class="topic"><?=$data['topic']?></textarea>
 	</div>
 	<ol>
 
 		<?php $index=0; foreach($data['questions'] as $value): ?>
 		<li>
-			<textarea class="question<?php echo $index ?>"><?php echo trim($value["text"],"'") ?></textarea>
+			<textarea class="question-text question<?php echo $index ?>"><?php echo trim($value["text"],"'") ?></textarea>
 			
 			<div class="answer-container<?php echo $index ?>">
 				<input type="radio" name="answer<?php echo $index ?>" value="1"
