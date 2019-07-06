@@ -44,7 +44,7 @@
 <a class="export-button" href="http://localhost/results/export/<?php echo $testResult->id ?>">Export</a>
 
 <script>
-	const data = JSON.parse('<?php echo json_encode($data) ?>');
+	const data = JSON.parse('<?php echo addslashes(json_encode($data)) ?>');
 	window.onload = loadCorrectWrongIcons();
 
 	function loadCorrectWrongIcons() {

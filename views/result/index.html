@@ -10,14 +10,16 @@
 						<th>Correct Answers</th>
 						<th>Questions Count</th>
 						<th>Datetime</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<?php foreach($data['testResults'] as $test) { ?>
-				<tr class="testresult-row" onclick="onTestRusultClick('<?php echo $test->id ?>')">
-					<td><?php echo $test->topic ?></td>
-					<td><?php echo $test->correctAnswers ?></td>
-					<td><?php echo $test->questionsCount ?></td>
-					<td><?php echo $test->createdAt ?></td>
+				<tr class="testresult-row" >
+					<td onclick="onTestRusultClick('<?php echo $test->id ?>')"><?php echo $test->topic ?></td>
+					<td onclick="onTestRusultClick('<?php echo $test->id ?>')"><?php echo $test->correctAnswers ?></td>
+					<td onclick="onTestRusultClick('<?php echo $test->id ?>')"><?php echo $test->questionsCount ?></td>
+					<td onclick="onTestRusultClick('<?php echo $test->id ?>')"><?php echo $test->createdAt ?></td>
+					<td><a href="/results/export/<?php echo $test->id ?>">Export</a></td>
 				</tr>
 				<?php } ?>
 			</table>

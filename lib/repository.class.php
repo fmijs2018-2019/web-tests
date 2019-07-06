@@ -15,7 +15,7 @@ class Repository
 		if (count($data) > 0) {
 			$test = new Test();
 			$test->id = (int) $data[0]['id'];
-			$test->topic = (int) $data[0]['topic'];
+			$test->topic = $data[0]['topic'];
 			$test->createdAt = $data[0]['created_at'];
 			$test->createdBy = $data[0]['created_by'];
 			return $test;

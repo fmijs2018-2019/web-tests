@@ -1,16 +1,19 @@
 <div class="tests-container">
 	<h2>All tests</h2>
+	<div id="test-saved"></div>
 	<button class="filter-button" id="filter-mine" onclick="changeFilter('mine')">Mine</button>
 	<button class="filter-button" id="filter-all" onclick="changeFilter('all')">All</button>
 
-	<input type="text" id="search-input" onkeyup="applyFilters()" placeholder="Search for names.." title="Type in a name">
+	<input type="text" id="search-input" onkeyup="applyFilters()" placeholder="Search for names.."
+		title="Type in a name">
 
 	<ul id="tests-list">
 		<?php foreach($data as $test) { ?>
 		<li class="all <?php if($test['isMine']) echo 'mine'; ?>">
 			<span><?php echo $test['topic'] ?></span>
 			<span>
-				<span><a class="<?php if($test['isMine']) echo 'visible'; else echo 'hidden'?>" href="/tests/<?php echo $test['id'] ?>/edit">Edit</a></span>
+				<span><a class="<?php if($test['isMine']) echo 'visible'; else echo 'hidden'?>"
+						href="/tests/<?php echo $test['id'] ?>/edit">Edit</a></span>
 				<span><a href="/tests/<?php echo $test['id'] ?>">Solve</a></span>
 			</span>
 		</li>
@@ -21,13 +24,21 @@
 <script>
 	let classFilter = 'all';
 
+	const status = utils.getParameterByName('status');
+	if (status && status === '1') {
+		document.getElementById('test-saved').innerHTML = `<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <strong>Success!</strong> Test updated successfully!
+</div>`;
+	}
+
 	function changeFilter(filter) {
 		classFilter = filter;
 
-		if(filter === 'all') {
+		if (filter === 'all') {
 			document.getElementById('filter-all').style.backgroundColor = '#1b7b36';
 			document.getElementById('filter-mine').style.backgroundColor = 'grey';
-		} else if(filter === 'mine') {
+		} else if (filter === 'mine') {
 			document.getElementById('filter-all').style.backgroundColor = 'grey';
 			document.getElementById('filter-mine').style.backgroundColor = '#1b7b36';
 		}
@@ -44,7 +55,7 @@
 		for (i = 0; i < li.length; i++) {
 			span = li[i].getElementsByTagName("span")[0];
 			txtValue = span.textContent || span.innerText;
-			if (txtValue.toUpperCase().indexOf(filter) > -1 && li[i].classList.contains(classFilter) ) {
+			if (txtValue.toUpperCase().indexOf(filter) > -1 && li[i].classList.contains(classFilter)) {
 				li[i].style.display = '';
 			} else {
 				li[i].style.display = 'none';

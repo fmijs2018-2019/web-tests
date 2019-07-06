@@ -8,16 +8,16 @@
 
 .test-edit-container .answer-container {
 	display: block;
-    width: 90%;
-    padding: 5px;
+	width: 90%;
+	padding: 5px;
 }
 
 .test-edit-container .answer-text, .test-edit-container .question-text {
 	width: 85%;
-    margin: 10px;
-    padding: 5px;
-    border-radius: 5px;
-    border: solid 1px lightgray;
+	margin: 10px;
+	padding: 5px;
+	border-radius: 5px;
+	border: solid 1px lightgray;
 }
 
 .test-edit-container .topic {
@@ -37,4 +37,26 @@
 	padding: 12px;
 	margin: 20px auto;
 	font-size: 1.2em;
+}
+
+.alert {
+	padding: 20px;
+	background-color: #4CAF50;
+	color: white;
+	border-radius: 10px;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.closebtn:hover {
+	color: black;
 }
