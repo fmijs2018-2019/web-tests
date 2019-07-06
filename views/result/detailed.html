@@ -41,7 +41,7 @@
 		<?php $index++; endforeach; ?>
 	</ol>
 </div>
-<p><button onclick="exportToCsv()" class="export-button">Export</button></p>
+<a class="export-button" href="http://localhost/results/export/<?php echo $testResult->id ?>">Export</a>
 
 <script>
 	const data = JSON.parse('<?php echo addslashes(json_encode($data)) ?>');
@@ -77,10 +77,5 @@
 				correctAnswerElement.appendChild(correctIcon);
 			}
 		});
-	}
-
-
-	function exportToCsv() {
-
 	}
 </script>

@@ -67,6 +67,10 @@ $router->mount('/results', function () use ($router) {
 		$contoller->detailedView($id);
 	});
 
+	$router->get('/export/(\d+)', function ($id) use ($contoller) {
+		$contoller->exportToCsv($id);
+	});
+
 	$router->get('/index', function () use ($contoller) {
 		// todo
 		// $contoller->index();
