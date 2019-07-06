@@ -24,13 +24,6 @@
 	// some php magic
 	var dateStr = "<?=$data['user']['updated_at']?>";
 	var datetime = new Date(dateStr);
-	var formatDate = function (date) {
-		var hours = date.getHours();
-		var minutes = date.getMinutes();
-		minutes = minutes < 10 ? '0' + minutes : minutes;
-		var strTime = hours + ':' + minutes;
-		return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + "  " + strTime;
-	}
-	var formatted = formatDate(datetime);
+	var formatted = utils.formatDate(datetime);
 	document.getElementById('profile-update').innerHTML = "Profile update: " + formatted;
 </script>

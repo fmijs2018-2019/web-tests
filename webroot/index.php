@@ -46,6 +46,24 @@ $router->mount('/home', function () use ($router) {
 	});
 });
 
+// result routes
+$router->mount('/results', function () use ($router) {
+	$contoller = new ResultController();
+
+	$router->get('/(\d+)', function ($id) use ($contoller) {
+		$contoller->getById($id);
+	});
+
+	$router->get('/index', function () use ($contoller) {
+		// todo
+		// $contoller->index();
+	});
+
+	$router->post('/submit', function () use ($contoller) {
+		$contoller->submit();
+	});
+});
+
 // test routes
 $router->mount('/tests', function () use ($router) {
 	$contoller = new TestController();

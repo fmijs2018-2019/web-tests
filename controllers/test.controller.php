@@ -70,7 +70,7 @@ class TestController extends Controller
 
 	public function get($id)
 	{
-		$test = $this->db->query("select topic, id from tests where id = " . $id);
+		$test = $this->db->query("select id, topic, created_at, created_by from tests where id = " . $id);
 		$questions = $this->db->query("select id, text, answer_1, answer_2, answer_3, answer_4, correct_answer from questions where test_id = " . $id);
 		$data = array();
 		$data['topic'] = $test[0]['topic'];
