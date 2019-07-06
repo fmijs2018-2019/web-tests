@@ -12,6 +12,21 @@ class ResultController extends Controller
 		$this->repo = new Repository();
 	}
 
+	public function indexView()
+	{
+		$user = $this->auth->getUser();
+		$testResults = $this->repo->getTestResultsByUserId($user['sub']);
+
+		$data['user'] = $user;
+		$data['testResults'] = $testResults;
+
+		$view = $this->withLayout(
+			new View($data, VIEWS_PATH . DS . 'result' . DS . 'index.html')
+		);
+
+		echo $view->render();
+	}
+
 	public function detailedView($id)
 	{
 		$testResult = $this->repo->getTestResultById($id);

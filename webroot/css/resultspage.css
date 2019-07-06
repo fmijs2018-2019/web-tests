@@ -1,0 +1,23 @@
+.testresults-page table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.testresults-page td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+.testresults-page .testresults-cotainer {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.testresults-page .testresult-row:hover > td {
+	background: lightgreen;
+	cursor: pointer;
+}

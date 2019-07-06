@@ -75,6 +75,10 @@ $router->mount('/results', function () use ($router) {
 	$router->post('/submit', function () use ($contoller) {
 		$contoller->submit();
 	});
+	
+	$router->get('/', function () use ($contoller) {
+		$contoller->indexView();
+	});
 });
 
 $router->before('GET|POST', '/results.*', function () {

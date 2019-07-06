@@ -45,11 +45,16 @@ class Repository
 
 	function getTestResultById($id)
 	{
-		$data = $this->db->query('select id, test_id, user_id, correct_answers, questions_count, created_at from test_results where id = ' . $id);
+		$query = 'select tr.id, tr.test_id, t.topic, tr.user_id, tr.correct_answers, tr.questions_count, tr.created_at'
+			. ' from test_results as tr inner join tests as t on tr.test_id = t.id'
+			. ' where tr.id = ' . $id;
+
+		$data = $this->db->query($query);
 		if (count($data) > 0) {
 			$tResult = new TestResult();
 			$tResult->id = (int) $data[0]['id'];
 			$tResult->testId = (int) $data[0]['test_id'];
+			$tResult->topic = $data[0]['topic'];
 			$tResult->userId = $data[0]['user_id'];
 			$tResult->correctAnswers = (int) $data[0]['correct_answers'];
 			$tResult->questionsCount = (int) $data[0]['questions_count'];
@@ -62,13 +67,17 @@ class Repository
 
 	function getTestResultsByUserId($id)
 	{
-		$userId = $this->db->quote($id);
-		$data = $this->db->query('select id, test_id, user_id, correct_answers, questions_count, created_at from test_results where user_id = ' . $userId);
+		$query = 'select tr.id, tr.test_id, t.topic, tr.user_id, tr.correct_answers, tr.questions_count, tr.created_at'
+			. ' from test_results as tr inner join tests as t on tr.test_id = t.id'
+			. ' where tr.user_id = ' . $this->db->quote($id);
+
+		$data = $this->db->query($query);
 		$result = array();
-		foreach($data as $d) {
+		foreach ($data as $d) {
 			$tResult = new TestResult();
 			$tResult->id = (int) $d['id'];
 			$tResult->testId = (int) $d['test_id'];
+			$tResult->topic = $d['topic'];
 			$tResult->userId = $d['user_id'];
 			$tResult->correctAnswers = (int) $d['correct_answers'];
 			$tResult->questionsCount = (int) $d['questions_count'];

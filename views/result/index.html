@@ -1,0 +1,32 @@
+<div class="testresults-page">
+	<h2 style="text-align: center">Test results</h2>
+
+	<div class="testresults-cotainer">
+		<div style="width: 800px">
+			<table>
+				<thead>
+					<tr>
+						<th>Test Topic</th>
+						<th>Correct Answers</th>
+						<th>Questions Count</th>
+						<th>Datetime</th>
+					</tr>
+				</thead>
+				<?php foreach($data['testResults'] as $test) { ?>
+				<tr class="testresult-row" onclick="onTestRusultClick('<?php echo $test->id ?>')">
+					<td><?php echo $test->topic ?></td>
+					<td><?php echo $test->correctAnswers ?></td>
+					<td><?php echo $test->questionsCount ?></td>
+					<td><?php echo $test->createdAt ?></td>
+				</tr>
+				<?php } ?>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script>
+	const onTestRusultClick = function (id) {
+		window.location.href = '/results/' + id;
+	}
+</script>
