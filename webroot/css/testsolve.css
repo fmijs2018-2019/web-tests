@@ -1,4 +1,4 @@
-.test-container {
+.test-solve-container {
 	width: 60%;
 	margin: auto;
 	border: solid 1px lightgray;
@@ -18,7 +18,7 @@
 	font-size: 1.2em;
 }
 
-.correct-icon, .fa-check {
+/* .correct-icon, .fa-check {
 	color: green;
 }
 
@@ -28,4 +28,4 @@
 
 .correct-icon, .wrong-icon {
 	display: none;
-}
+} */
