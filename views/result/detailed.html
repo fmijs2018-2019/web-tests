@@ -44,7 +44,7 @@
 <p><button onclick="exportToCsv()" class="export-button">Export</button></p>
 
 <script>
-	const data = JSON.parse('<?php echo json_encode($data) ?>');
+	const data = JSON.parse('<?php echo addslashes(json_encode($data)) ?>');
 	window.onload = loadCorrectWrongIcons();
 
 	function loadCorrectWrongIcons() {

@@ -9,23 +9,31 @@
 				<span><?php echo trim($value["text"],"'") ?></span>
 			</div>
 			<div id="question<?php echo $index ?>-answer1">
-				<input type="radio" name="question<?php echo $index ?>-answer" value="1">
-				<span><?php echo trim($value['answer_1'],"'") ?></span>
+				<label>
+					<input type="radio" name="question<?php echo $index ?>-answer" value="1">
+					<span><?php echo trim($value['answer_1'],"'") ?></span>
+				</label>
 			</div>
 
 			<div id="question<?php echo $index ?>-answer2">
-				<input type="radio" name="question<?php echo $index ?>-answer" value="2">
-				<span><?php echo trim($value['answer_2'],"'") ?></span>
+				<label>
+					<input type="radio" name="question<?php echo $index ?>-answer" value="2">
+					<span><?php echo trim($value['answer_2'],"'") ?></span>
+				</label>
 			</div>
 
 			<div id="question<?php echo $index ?>-asnwer3">
-				<input type="radio" name="question<?php echo $index ?>-answer" value="3">
-				<span><?php echo trim($value['answer_3'],"'") ?></span>
+				<label>
+					<input type="radio" name="question<?php echo $index ?>-answer" value="3">
+					<span><?php echo trim($value['answer_3'],"'") ?></span>
+				</label>
 			</div>
 
 			<div id="question<?php echo $index ?>-answer4">
-				<input type="radio" name="question<?php echo $index ?>-answer" value="4">
-				<span><?php echo trim($value['answer_4'],"'") ?></span> <br>
+				<label>
+					<input type="radio" name="question<?php echo $index ?>-answer" value="4">
+					<span><?php echo trim($value['answer_4'],"'") ?></span> <br>
+				</label>
 			</div>
 		</li>
 		<br>
@@ -39,9 +47,9 @@
 	document.getElementById('submit-button').addEventListener('click', onClick);
 
 	function onClick() {
-		const questions = JSON.parse(`<?php echo json_encode($data["questions"]) ?>`);
-		const testId = JSON.parse(`<?php echo json_encode($data["id"]) ?>`);
-		const userId = JSON.parse(`<?php echo json_encode($data["user"]["sub"]) ?>`);
+		const questions = JSON.parse(`<?php echo addslashes(json_encode($data["questions"])) ?>`);
+		const testId = JSON.parse(`<?php echo addslashes(json_encode($data["id"])) ?>`);
+		const userId = JSON.parse(`<?php echo addslashes(json_encode($data["user"]["sub"])) ?>`);
 
 		const result = {
 			userId,

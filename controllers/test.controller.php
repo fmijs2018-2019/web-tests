@@ -49,7 +49,7 @@ class TestController extends Controller
 			$testId = $this->db->lastInsertId();
 			$insertQuestionsQuery = 'insert into questions ( test_id, text, answer_1, answer_2, answer_3, answer_4, correct_answer ) values ';
 
-			while (($filesop = fgetcsv($handle, 1000, ",")) !== false) {
+			while (($filesop = fgetcsv($handle, 1000, ",", '"', '"')) !== false) {
 				$question = iconv(mb_detect_encoding($filesop[0], mb_detect_order(), true), "UTF-8", $filesop[0]);;
 				$answer_1 = $filesop[1];
 				$answer_2 = $filesop[2];
