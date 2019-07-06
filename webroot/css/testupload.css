@@ -1,15 +1,15 @@
-table {
+.upload-form-container table {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-td, th {
+.upload-form-container td, .upload-form-container th {
 	border: 1px solid black;
 	padding: 8px;
 }
 
-th {
+.upload-form-container th {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	text-align: left;
@@ -22,7 +22,7 @@ th {
 	margin: auto
 }
 
-.file-input-container {
+.upload-form-container .file-input-container {
 	width: 100%;
 	margin: 30px 0;
 	text-align: center;
@@ -31,7 +31,7 @@ th {
 	padding: 20px 0 50px 0;
 }
 
-.file-input-container button {
+.upload-form-container .file-input-container button {
 	background-color: #d3394c;
 	color: white;
 	border: none;
@@ -41,7 +41,7 @@ th {
 	font-size: 1.2em;
 }
 
-.alert {
+.upload-form-container .alert {
 	margin: 15px 0;
 	padding: 15px;
 	font-size: 1.2em;
@@ -99,7 +99,7 @@ th {
 	color: #722040;
 }
 
-#topic {
+.upload-form-container #topic {
 	display: block;
 	width: 150px;
 	margin: 30px auto;
