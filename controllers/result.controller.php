@@ -60,7 +60,7 @@ class ResultController extends Controller
 
 			$test = $this->repo->getTestById($testId);
 			$questions = $this->repo->getQuestionsByTestId($testId);
-			
+
 			$correctAnswers = 0;
 			$answerDtos = array();
 			foreach ($answers as $answer) {
@@ -93,4 +93,5 @@ class ResultController extends Controller
 			echo $testResultId;
 		}
 	}
+
 }

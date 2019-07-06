@@ -1,7 +1,86 @@
+<?php
+	$testResult = $data['testResult'];
+	$questions = $data['questions'];
+	$answers = $data['answers'];
+	$test = $data['test'];
+?>
+
+<h2 style="text-align: center"><?php echo $test->topic ?></h2>
+
 <div class="result-detailed-container">
-	
+	<div class="result-summary">
+		<div>Correct answers: <?php echo $testResult->correctAnswers ?></div>
+		<div>Total questions count: <?php echo $testResult->questionsCount ?></div>
+		<div>Result: <?php echo $testResult->correctAnswers/$testResult->questionsCount*100 ?>%</div>
+	</div>
+	<ol>
+		<?php $index=0; foreach($questions as $value): ?>
+		<li>
+			<div id="question<?php echo $index ?>">
+				<span><?php echo trim($value->text,"'") ?></span>
+			</div>
+			<ul>
+				<li id="question<?php echo $index ?>-answer1">
+					<?php echo trim($value->answer1,"'") ?>
+				</li>
+
+				<li id="question<?php echo $index ?>-answer2">
+					<?php echo trim($value->answer2,"'") ?>
+				</li>
+
+				<li id="question<?php echo $index ?>-answer3">
+					<?php echo trim($value->answer3,"'") ?>
+				</li>
+
+				<li id="question<?php echo $index ?>-answer4">
+					<?php echo trim($value->answer4,"'") ?> <br>
+				</li>
+			</ul>
+		</li>
+		<br>
+		<?php $index++; endforeach; ?>
+	</ol>
 </div>
+<p><button onclick="exportToCsv()" class="export-button">Export</button></p>
 
 <script>
-	console.log('<?php echo json_encode($data) ?>');
+	const data = JSON.parse('<?php echo json_encode($data) ?>');
+	window.onload = loadCorrectWrongIcons();
+
+	function loadCorrectWrongIcons() {
+		console.log(data);
+		const questions = data.questions;
+		const answers = data.answers;
+
+		questions.forEach((q, index) => {
+			const answer = answers.find(a => a.questionId === q.id);
+			if (answer.correctAnswer === answer.givenAnswer) {
+				const answerElement = document.getElementById(`question${index}-answer${answer.correctAnswer}`);
+
+				const correctIcon = document.createElement('span');
+				correctIcon.innerHTML = `<i class="fa fa-check"></i>`;
+				correctIcon.className = 'correct-icon';
+				answerElement.appendChild(correctIcon);
+			} else {
+				const correctIcon = document.createElement('span');
+				correctIcon.innerHTML = `<i class="fa fa-check"></i>`;
+				correctIcon.className = 'correct-icon';
+
+				const wrongIcon = document.createElement('span');
+				wrongIcon.innerHTML = `<i class="fa fa-times"></i>`;
+				wrongIcon.className = 'wrong-icon';
+
+				const givenAnswerElement = document.getElementById(`question${index}-answer${answer.givenAnswer}`);
+				givenAnswerElement.appendChild(wrongIcon);
+
+				const correctAnswerElement = document.getElementById(`question${index}-answer${answer.correctAnswer}`);
+				correctAnswerElement.appendChild(correctIcon);
+			}
+		});
+	}
+
+
+	function exportToCsv() {
+
+	}
 </script>
